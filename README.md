@@ -1,4 +1,4 @@
-# Smart RTC-Based LED Schedule Controller Using LPC2148
+# RTC-Based LED Schedule Controller Using LPC2148
 
 A microcontroller-based embedded systems project designed around the LPC2148/LPC21xx family. The system combines keypad input, LCD display, real-time clock functionality, and time-based control logic to create a compact digital clock and scheduling controller that switches an LED based on a user-defined ON/OFF timetable.
 
@@ -6,17 +6,17 @@ This repository is suitable for academic submission, professional portfolio pres
 
 ## 1. Project Title
 
-Smart RTC-Based LED Schedule Controller Using LPC2148
+RTC-Based LED Schedule Controller Using LPC2148
 
 ## 2. Abstract
 
 This project demonstrates the design and implementation of a real-time embedded system using the LPC2148 microcontroller. The system displays current time, date, and day information on a 16x2 LCD, accepts user commands from a 4x4 keypad, and allows configuration of RTC settings and an ON/OFF schedule. Based on the configured schedule, an LED is turned ON or OFF automatically.
 
-The application is a practical example of how embedded hardware and software interact in real time. It integrates multiple peripheral modules such as keypad scanning, display output, timer/clock management, and interrupt-driven control logic. The project is useful as a base for automation systems, appliance control, and smart time-scheduling applications.
+The application is a practical example of how embedded hardware and software interact in real time. It integrates multiple peripheral modules such as keypad scanning, display output, timer/clock management, and interrupt-driven control logic. The project is useful as a base for automation systems, appliance control, and  time-scheduling applications.
 
 ## 3. Problem Statement
 
-Embedded systems are widely used in automation, time-based control, and user-interactive devices. A common requirement in smart systems is the ability to keep track of time, allow user adjustments, and trigger an action based on a schedule. Traditional systems often require complex hardware and software combinations.
+Embedded systems are widely used in automation, time-based control, and user-interactive devices. A common requirement in - systems is the ability to keep track of time, allow user adjustments, and trigger an action based on a schedule. Traditional systems often require complex hardware and software combinations.
 
 This project addresses this need by implementing a compact microcontroller-based controller that can:
 
@@ -391,7 +391,7 @@ The project can be validated by checking:
 
 ## 29. Conclusion
 
-The Smart RTC-Based LED Schedule Controller is a practical embedded systems project that demonstrates real-time clock functionality, menu-driven user interaction, and time-based logic control. It combines multiple core concepts in microcontroller programming and embedded design in a compact and understandable implementation.
+The - RTC-Based LED Schedule Controller is a practical embedded systems project that demonstrates real-time clock functionality, menu-driven user interaction, and time-based logic control. It combines multiple core concepts in microcontroller programming and embedded design in a compact and understandable implementation.
 
 This project is suitable for learning, demonstration, and documentation across academic, portfolio, and internship contexts.
 
