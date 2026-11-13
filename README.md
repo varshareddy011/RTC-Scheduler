@@ -1,419 +1,145 @@
-# RTC-Based LED Schedule Controller Using LPC2148
+<div align="center">
 
-A microcontroller-based embedded systems project designed around the LPC2148/LPC21xx family. The system combines keypad input, LCD display, real-time clock functionality, and time-based control logic to create a compact digital clock and scheduling controller that switches an LED based on a user-defined ON/OFF timetable.
+# RTC Scheduler
 
-This repository is suitable for academic submission, professional portfolio presentation, embedded systems learning, and internship/final-year project documentation.
+### LPC2148-based real-time clock and scheduled LED controller
 
-## 1. Project Title
+A bare-metal Embedded C project that combines an RTC, a 16×2 LCD, a 4×4 keypad, and scheduled LED control.
 
-RTC-Based LED Schedule Controller Using LPC2148
+[Features](#features) · [Hardware](#hardware) · [How-it-works](#how-it-works) · [Build-and-run](#build-and-run) · [Project-structure](#project-structure)
 
-## 2. Abstract
-
-This project demonstrates the design and implementation of a real-time embedded system using the LPC2148 microcontroller. The system displays current time, date, and day information on a 16x2 LCD, accepts user commands from a 4x4 keypad, and allows configuration of RTC settings and an ON/OFF schedule. Based on the configured schedule, an LED is turned ON or OFF automatically.
-
-The application is a practical example of how embedded hardware and software interact in real time. It integrates multiple peripheral modules such as keypad scanning, display output, timer/clock management, and interrupt-driven control logic. The project is useful as a base for automation systems, appliance control, and  time-scheduling applications.
-
-## 3. Problem Statement
-
-Embedded systems are widely used in automation, time-based control, and user-interactive devices. A common requirement in - systems is the ability to keep track of time, allow user adjustments, and trigger an action based on a schedule. Traditional systems often require complex hardware and software combinations.
-
-This project addresses this need by implementing a compact microcontroller-based controller that can:
-
-- read real time from the RTC
-- display information on an LCD
-- take user input from a keypad
-- allow time/date configuration
-- control a device (LED) according to a defined schedule
-
-## 4. Objectives
-
-The main objectives of this project are:
-
-- To design a realtime clock-based embedded application using LPC2148
-- To interface a keypad with a microcontroller for user input
-- To display time and date on an LCD
-- To configure RTC values through a menu-driven interface
-- To implement an ON/OFF scheduling mechanism
-- To control an LED using time-based logic
-- To create a simple and reliable embedded solution suitable for demonstrations and learning
-
-## 5. Project Scope
-
-The project includes:
-
-- RTC initialization and time/date management
-- LCD initialization and display logic
-- 4x4 keypad scanning and number input
-- menu-driven configuration system
-- LED scheduling logic with cross-midnight support
-- external interrupt for menu triggering
-
-The project does not include advanced networking, database integration, or cloud-based monitoring. It is focused on embedded control and real-time hardware interaction.
-
-## 6. Project Significance
-
-This project is significant because it introduces students and developers to essential embedded systems concepts, including:
-
-- microcontroller peripheral interfacing
-- real-time clock operations
-- user interface development
-- embedded firmware architecture
-- interrupt-driven event handling
-- scheduling logic in embedded applications
-
-It is also a strong example of building a system that is both practical and easy to understand.
-
-## 7. Features
-
-- Real-time clock display for hours, minutes, and seconds
-- Date, month, and year display
-- Day-of-week tracking
-- 4x4 keypad-based user interaction
-- LCD menu system for RTC setup
-- Time validation logic
-- Date validation logic
-- Day selection menu
-- ON/OFF schedule configuration
-- LED control based on current time
-- Midnight-overlap schedule support
-- Menu request using external interrupt
-- Continuous real-time monitoring loop
-
-## 8. Hardware Requirements
-
-The project targets the LPC2148 or a compatible LPC21xx microcontroller board and requires the following hardware:
-
-- LPC2148 / LPC21xx development board
-- 16x2 LCD display
-- 4x4 matrix keypad
-- LED indicator
-- Breadboard / PCB wiring
-- Power supply
-- Optional external interrupt trigger input
-
-## 9. Software Requirements
-
-The project is implemented in embedded C and requires an ARM-compatible toolchain such as:
-
-- Keil µVision
-- ARM GCC
-- LPC-specific firmware development environment
-- Flashing utility or debugger
-
-## 10. System Architecture
-
-The application is built as a layered embedded system:
-
-- Input Layer: keypad, external interrupt
-- Processing Layer: LPC2148 microcontroller
-- Storage/Time Layer: RTC registers and time variables
-- Output Layer: LCD display and LED control
-
-The system continuously monitors time and decides whether the LED should be ON or OFF based on the configured schedule.
-
-## 11. Block Diagram
-
-```text
-+------------------+
-| 4x4 Keypad       |
-+---------+--------+
-          |
-          v
-+------------------+
-| LPC2148 MCU      |
-| - RTC            |
-| - GPIO           |
-| - Interrupts     |
-+---------+--------+
-          |
-     +----+----+
-     |         |
-     v         v
-+-----------+ +-----------+
-| LCD       | | LED       |
-| 16x2      | | Output    |
-+-----------+ +-----------+
-```
-
-## 12. Working Principle
-
-On startup, the microcontroller initializes the LCD, RTC, keypad, LED, and interrupt system. It then begins displaying the current time and date. The user can enter the menu system to configure:
-
-- current time
-- date
-- day
-- ON schedule
-- OFF schedule
-
-The schedule is stored as time values, converted to seconds, and compared with the current RTC time. When the current time matches the scheduled interval, the LED is activated. The system continues updating in a cyclic loop.
-
-## 13. Functional Description
-
-### RTC Section
-The RTC module initializes the real-time clock and provides functions to:
-
-- set time
-- get time
-- set date
-- get date
-- set day of week
-
-### LCD Section
-The LCD module handles:
-
-- command and data writes
-- initialization routines
-- string and numeric display
-- 2-line output formatting
-
-### Keypad Section
-The keypad logic performs:
-
-- row scanning
-- column detection
-- key decoding
-- numeric value reading
-
-### Schedule Section
-The schedule module performs:
-
-- HH:MM conversion to seconds
-- ON/OFF time storage
-- schedule comparison logic
-- LED output control
-
-### Main Controller
-The main file is responsible for the complete behavior of the device. It bridges all modules together and manages the main application loop.
-
-## 14. Menu Flow
-
-The firmware uses a menu-driven structure for user interaction.
-
-Main Menu:
-
-- RTC
-- Schedule
-- Exit
-
-RTC Menu:
-
-- Time
-- Date
-- Day
-- Back
-
-Schedule Menu:
-
-- ON Time
-- OFF Time
-- Save Schedule
-- Back
-
-This menu is navigated using keypad entries and displayed on the LCD.
-
-## 15. Project Structure
-
-```text
-Mini-project/
-├── README.md
-├── KPM.c
-├── KPM.h
-├── KPM_defines.h
-├── LCD.c
-├── LCD.h
-├── LCD_defines.h
-├── Rtclock.c
-├── Rtclock.h
-├── schedule.c
-├── schedule.h
-├── delay.c
-├── delay.h
-├── output.c
-├── types.h
-└── other board-specific support files
-```
-
-## 16. File-wise Overview
-
-### KPM.c / KPM.h
-Responsible for keypad scanning and decoding user input.
-
-### LCD.c / LCD.h
-Responsible for LCD initialization and display output.
-
-### Rtclock.c / Rtclock.h
-Responsible for RTC read/write operations.
-
-### schedule.c / schedule.h
-Responsible for ON/OFF schedule logic and LED control.
-
-### output.c
-Main controller logic for the complete project behavior.
-
-### delay.c / delay.h
-Provides delay functions needed for timing and LCD operations.
-
-## 17. How the Schedule Logic Works
-
-The project converts hour and minute values into seconds using the formula:
-
-```c
-seconds = (hour * 3600) + (minute * 60) + second;
-```
-
-Then it compares the current time with the configured ON/OFF interval. If the current time falls inside the active period, the LED is triggered. The logic also handles schedules that cross midnight.
-
-## 18. Example Workflow
-
-A typical operational sequence is:
-
-1. Power ON the board
-2. LCD displays current time
-3. User presses the menu trigger
-4. User enters RTC menu
-5. User sets time or date
-6. User enters schedule menu
-7. User sets ON and OFF times
-8. The LED follows the schedule automatically
-
-## 19. Output and Results
-
-The system demonstrates:
-
-- time management using RTC
-- real-time display on LCD
-- keypad-based configuration
-- automated control action based on time
-
-This proves the viability of embedded scheduling in a compact system.
-
-## 20. Use Cases
-
-This project can be adapted for:
-
-- automatic street light control
-- office appliance scheduling
-- digital clock with control interface
-- classroom demonstration of embedded systems
-- home automation prototypes
-- timer-based switching devices
-
-## 21. Advantages
-
-- Simple and low-cost embedded design
-- Easy to understand and demonstrate
-- Real-time scheduling capability
-- Good learning project for electronics and C programming
-- Suitable for microcontroller lab work
-
-## 22. Limitations
-
-- No persistent storage for schedule data after power reset
-- No external communication or web dashboard
-- Hardware-specific pin configuration is necessary
-- Limited to onboard device control (LED demonstration)
-
-## 23. Future Enhancements
-
-Possible extensions include:
-
-- EEPROM storage for saved time and schedule settings
-- Relay output instead of LED for practical appliance control
-- Buzzer alarm functionality
-- Temperature and humidity monitoring
-- GSM / Wi-Fi communication
-- Web or mobile monitoring interface
-- Real-time logging and event tracking
-
-## 24. Academic Relevance
-
-This project is relevant for:
-
-- Embedded Systems
-- Microprocessor and Microcontroller Lab
-- Real-Time Systems
-- Internet of Things (IoT) basics
-- Digital Design and Automation
-- Embedded C Programming
-
-It is a strong example of hardware-software integration and real-time control.
-
-## 25. Portfolio / Interview Relevance
-
-This project demonstrates:
-
-- microcontroller interfacing skills
-- practical embedded software development
-- peripheral integration knowledge
-- ability to build a user-driven real-time system
-- understanding of design and testing in embedded engineering
-
-It is a strong addition to a portfolio for embedded systems, firmware, or electronics-related roles.
-
-## 26. Open-Source Presentation Summary
-
-This repository is a clean, hardware-focused C project that showcases a complete embedded application. It can be presented as:
-
-- a learning project
-- a laboratory demonstration
-- a real-world automation prototype
-- a microcontroller-based scheduling system
-
-The code is organized into modules for easy understanding and expansion.
-
-## 27. Internship / Final-Year Project Documentation
-
-The project can be documented as a final-year mini project or internship assignment under the following headings:
-
-- Introduction
-- Background and Motivation
-- Hardware and Software Requirements
-- Methodology
-- System Design
-- Implementation
-- Results and Discussion
-- Conclusion
-- Future Scope
-
-This repository can easily serve as the implementation artifact for such a report.
-
-## 28. Testing and Validation
-
-The project can be validated by checking:
-
-- LCD initializes correctly
-- keypad input is detected correctly
-- RTC values update properly
-- menu input accepts valid values only
-- invalid time/date values are rejected
-- LED changes state when time enters and exits the schedule interval
-
-## 29. Conclusion
-
-The - RTC-Based LED Schedule Controller is a practical embedded systems project that demonstrates real-time clock functionality, menu-driven user interaction, and time-based logic control. It combines multiple core concepts in microcontroller programming and embedded design in a compact and understandable implementation.
-
-This project is suitable for learning, demonstration, and documentation across academic, portfolio, and internship contexts.
-
-## 30. License
-
-This repository currently does not include a formal software license file. If the project is intended for public distribution or reuse, it is recommended to add an appropriate license such as MIT or Apache 2.0.
-
-## 31. Author
-
-Varsha Reddy
-
-GitHub: https://github.com/varshareddy011
-Repository: https://github.com/varshareddy011/Mini-project
-
-## 32. References
-
-- LPC2148 / LPC21xx microcontroller documentation
-- Embedded C programming principles
-- LCD interfacing concepts
-- RTC and GPIO register programming
-- Real-time embedded scheduling design
+</div>
 
 ---
 
-This README is written to be clear enough for academic submission, portfolio display, open-source presentation, and internship/final-year project documentation.
+## Overview
+
+RTC Scheduler is a microcontroller project for the LPC2148/LPC21xx family. It displays the current time, date, and day on an LCD; lets a user configure clock and schedule values through a keypad menu; and switches an LED according to the configured daily ON/OFF interval.
+
+The project is intended as a learning and demonstration example for embedded C, peripheral interfacing, and real-time control. The LED is a demonstration output; controlling mains-powered equipment would require appropriately rated, isolated hardware and a safe design.
+
+## Features
+
+- Displays hours, minutes, seconds, date, month, year, and day of week.
+- Provides keypad menus to set the RTC time, date, and day.
+- Allows users to configure and save schedule ON and OFF times.
+- Validates entered time and calendar values in the application menus.
+- Controls an LED according to the schedule; the ON instant is included and the OFF instant is excluded.
+- Supports schedules that cross midnight.
+- Uses an external interrupt to request entry to the menu.
+
+## Hardware
+
+The firmware is written for LPC2148/LPC21xx-style hardware and expects the peripherals below. Check the source pin definitions and your board schematic before wiring; this repository does not include a complete wiring diagram or board configuration guide.
+
+| Component | Purpose |
+| --- | --- |
+| LPC2148 or compatible LPC21xx board | Runs the firmware and provides the RTC and GPIO |
+| 16×2 character LCD | Displays the clock, date, status, and menus |
+| 4×4 matrix keypad | Menu navigation and numeric input |
+| LED | Shows whether the schedule is active |
+| External interrupt input | Requests the menu |
+
+> **Safety:** The project’s output is an LED. Do not connect an appliance or mains load directly to a microcontroller pin. Use a properly rated and isolated driver circuit designed for the load.
+
+## How it works
+
+1. `main()` in `output.c` initializes the LCD, RTC, keypad, LED, and external interrupt.
+2. The main loop refreshes the display and reads the RTC.
+3. `Schedule_IsActive()` compares current time with the saved ON/OFF interval. `schedule.c` handles both ordinary intervals and intervals crossing midnight.
+4. `LED_Control()` updates the LED output.
+5. The external interrupt sets a menu request flag; the main loop responds by entering the keypad-driven menus.
+
+### Menu controls
+
+- **Main menu:** `1` opens RTC settings, `2` opens schedule settings, `3` exits the menu.
+- **RTC menu:** `1` time, `2` date, `3` day, `4` back.
+- **Time and date submenus:** use the displayed number choices to select a field and return.
+- **Schedule menu:** `1` configures ON time, `2` configures OFF time, `3` saves and returns.
+
+The firmware uses a 4×4 keypad layout defined in `KPM.c`. The menu is requested by the configured external interrupt (EINT0); check the board wiring and `EINT0_Init()` in `output.c` to identify the correct trigger input for your setup.
+
+## Project structure
+
+```text
+.
+├── output.c          Main application, display loop, menus, and EINT0 handling
+├── schedule.c        Schedule interval checks and LED GPIO control
+├── schedule.h        Schedule and LED interface
+├── Rtclock.c         RTC initialization and register access
+├── Rtclock.h         RTC interface
+├── KPM.c             4×4 keypad scanning and numeric input
+├── KPM.h             Keypad interface
+├── KPM_defines.h     Keypad pin and layout definitions
+├── LCD.c             LCD initialization and display helpers
+├── LCD.h             LCD interface
+├── LCD_defines.h     LCD pin and command definitions
+├── delay.c           Delay implementation
+├── delay.h           Delay interface
+└── README.md          Project documentation
+```
+
+### Main modules
+
+- **`output.c`** coordinates initialization, LCD updates, user menus, RTC configuration, scheduling, and LED updates.
+- **`KPM.c`** scans the keypad and provides `KeyScan()` and `ReadNum()` for menu input.
+- **`LCD.c`** sends LCD commands and data and provides string and numeric display helpers.
+- **`Rtclock.c`** reads and writes RTC time, date, and day-of-week registers.
+- **`schedule.c`** converts times to seconds, checks the active interval, and controls the LED.
+- **`delay.c`** supplies timing helpers used by the peripheral code.
+
+## Build and run
+
+This repository contains C source and headers, but does not currently include a Makefile, IDE project, linker script, startup code, or a documented automated test setup. It is firmware for a physical target, not a standalone desktop application.
+
+To build and run it:
+
+1. Open or create a project for the exact LPC microcontroller on your board in a compatible ARM embedded toolchain.
+2. Add the project’s required `.c` files and headers, along with the device-specific CMSIS/vendor headers, startup code, and linker configuration required by that toolchain.
+3. Confirm that the target device, clock configuration, peripheral pin mapping, LCD wiring, keypad wiring, and interrupt input match the code and board.
+4. Build the firmware, flash it to the board, and test the LCD, keypad, RTC, interrupt input, and LED individually.
+5. Set the RTC and schedule from the menu, then verify the LED at times before, within, and after the configured interval.
+
+The source uses LPC device headers (including `lpc21xx.h` and `lpc214x.h`) and compiler-specific interrupt syntax such as `__irq`. The exact compiler setup may therefore need adaptation for your selected chip and toolchain. No single build command can be provided from the files currently in the repository.
+
+## Configuration and implementation notes
+
+- The code has initial date/day and schedule values in `output.c`; review these defaults before using the firmware.
+- Schedule and hardware settings are held in memory and initialized by the application; persistent schedule storage is not implemented.
+- Pin assignments and LCD/keypad wiring are hardware-dependent. Confirm them in the `*_defines.h` headers and against your board documentation.
+- `Rtclock.c` contains LPC2148-specific RTC clock-source configuration. Confirm that it matches your exact MCU and oscillator setup.
+- This project has not been documented with a hardware test report or a reproducible build configuration. Treat the build steps above as setup guidance and verify behavior on your target board.
+
+## Validation checklist
+
+- [ ] LCD initializes and displays the time/date.
+- [ ] Keypad presses are detected and menu values are entered correctly.
+- [ ] RTC time, date, and day can be updated.
+- [ ] Invalid values are rejected by the menus.
+- [ ] LED remains inactive before the ON time, becomes active during the interval, and turns off at the OFF time.
+- [ ] An interval crossing midnight behaves as expected.
+- [ ] The interrupt input requests the menu on the target hardware.
+
+## Learning and project use
+
+This repository can support an embedded systems lab, academic mini-project, portfolio demonstration, or internship/final-year project. It demonstrates microcontroller GPIO, LCD and keypad interfacing, RTC access, interrupt handling, and time-based decision logic. For academic submissions, supplement the source with your own board details, circuit diagram, toolchain/build settings, photographs, and measured test results rather than presenting unverified results as completed tests.
+
+## Possible extensions
+
+- Add an IDE project or reproducible build system with documented toolchain and MCU configuration.
+- Store schedule settings in non-volatile memory.
+- Add a relay/driver stage for a suitably rated low-voltage load, with appropriate isolation and protection.
+- Add serial diagnostics, alarms, or additional schedules.
+- Add automated tests for schedule calculations and boundary conditions.
+
+## License
+
+No license file is currently included. Until a license is added, reuse and redistribution permissions are not explicitly granted. Repository owners can add an open-source license if they want to permit reuse.
+
+## Author
+
+**Varsha Reddy** · [GitHub profile](https://github.com/varshareddy011)
+
+---
+
+<p align="center"><sub>Embedded C · LPC2148 · RTC · LCD · Keypad · Scheduling</sub></p>
